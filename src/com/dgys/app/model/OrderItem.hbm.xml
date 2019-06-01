@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019-5-29 15:39:24 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class dynamic-update="true" name="com.dgys.app.model.OrderItem" table="ORDERITEM">
+  <id name="orderItemId" type="int">
+   <column name="ORDERITEMID" not-null="true" unique="true"/>
+   <generator class="increment"/>
+  </id>
+  <many-to-one class="com.dgys.app.model.OrderDetail" name="orderDetail">
+   <column name="orderid"/>
+  </many-to-one>
+  <property generated="never" lazy="false" name="lineNum" type="java.lang.String">
+   <column name="LINENUM"/>
+  </property>
+  <property generated="never" lazy="false" name="itemNumber" type="java.lang.String">
+   <column name="ITEMNUMBER"/>
+  </property>
+  <property generated="never" lazy="false" name="dateRequired" type="java.lang.String">
+   <column name="DATEREQUIRED"/>
+  </property>
+  <property generated="never" lazy="false" name="unit" type="java.lang.String">
+   <column name="UNIT"/>
+  </property>
+  <property generated="never" lazy="false" name="odrQty" type="java.lang.String">
+   <column name="ODRQTY"/>
+  </property>
+  <property generated="never" lazy="false" name="unitCost" type="java.lang.String">
+   <column name="UNITCOST"/>
+  </property>
+  <property generated="never" lazy="false" name="amount" type="java.lang.String">
+   <column name="AMOUNT"/>
+  </property>
+  <set cascade="all" fetch="select" inverse="true" lazy="true"
+   name="itemRefs" sort="unsorted" table="ORDERITEMREF">
+   <key>
+    <column name="ORDERITEMID"/>
+   </key>
+   <one-to-many class="com.dgys.app.model.OrderItemRef"/>
+  </set>
+ </class>
+</hibernate-mapping>

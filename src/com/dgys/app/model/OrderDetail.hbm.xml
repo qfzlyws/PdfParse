@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019-5-29 15:39:24 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class dynamic-update="true" name="com.dgys.app.model.OrderDetail" table="ORDERDETAIL">
+  <id name="orderId" type="int">
+   <column name="ORDERID" not-null="true" unique="true"/>
+   <generator class="increment"/>
+  </id>
+  <property name="factNo" type="string">
+   <column name="fact_no"/>
+  </property>
+  <property generated="never" lazy="false" name="poNumber" type="java.lang.String">
+   <column name="PONUMBER"/>
+  </property>
+  <property generated="never" lazy="false" name="orderDate" type="java.lang.String">
+   <column name="ORDERDATE"/>
+  </property>
+  <property generated="never" lazy="false" name="resalePermit" type="java.lang.String">
+   <column name="RESALEPERMIT"/>
+  </property>
+  <property generated="never" lazy="false" name="shipVia" type="java.lang.String">
+   <column name="SHIPVIA"/>
+  </property>
+  <property generated="never" lazy="false" name="terms" type="java.lang.String">
+   <column name="TERMS"/>
+  </property>
+  <set cascade="all" fetch="select" inverse="true" lazy="true"
+   name="orderItems" sort="unsorted" table="ORDERITEM">
+   <key>
+    <column name="ORDERID" not-null="true"/>
+   </key>
+   <one-to-many class="com.dgys.app.model.OrderItem"/>
+  </set>
+  <property name="recDt" type="timestamp">
+   <column name="rec_dt" sql-type="TIMESTAMP"/>
+  </property>
+ </class>
+</hibernate-mapping>

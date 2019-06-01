@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="E:/Software/Java/PDFBox/2.0.15/fontbox-2.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/PDFBox/2.0.15/pdfbox-2.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/PDFBox/2.0.15/pdfbox-debugger-2.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/PDFBox/2.0.15/pdfbox-tools-2.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/PDFBox/2.0.15/preflight-2.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/PDFBox/2.0.15/xmpbox-2.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/hibernate-commons-annotations-5.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/hibernate-core-5.0.12.Final.jar" sourcepath="E:/Software/Java/hibernate-release-5.0.12.Final.zip"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/jandex-2.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/jboss-logging-3.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/libs/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/log4j-1.2.17.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
