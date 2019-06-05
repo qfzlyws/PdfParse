@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory >
+  <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+  <property name="hibernate.connection.password">fmis</property>
+  <property name="hibernate.connection.url">jdbc:oracle:thin:@172.24.5.111:1521:hjftdb</property>
+  <property name="hibernate.connection.username">fmis</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+  <property name="hibernate.show_sql">true</property>
+  <mapping resource="com/dgys/app/model/OrderDetail.hbm.xml"/>
+  <mapping resource="com/dgys/app/model/OrderItem.hbm.xml"/>
+  <mapping resource="com/dgys/app/model/OrderItemRef.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>
