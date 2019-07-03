@@ -24,7 +24,6 @@ public class AmfitOrderParser implements IOrderParser {
 		orderItems = new HashSet<>();
 		itemRefs = new HashSet<>();
 		
-		orderDetail.setFactNo(OrderDetector.factNo);
 		orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));
 	}
 	

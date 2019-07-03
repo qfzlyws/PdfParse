@@ -4,6 +4,7 @@ import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.dgys.app.model.OrderDetail;
+import com.dgys.app.model.OrderParseMain;
 import com.dgys.app.util.HibernateUtil;
 
 public class OrderDao {
@@ -19,6 +20,10 @@ public class OrderDao {
 			
 			try
 			{
+				//設置廠區編號和客戶編號屬性的值
+				orderDetail.setFactNo(OrderParseMain.factNo);
+				orderDetail.setCustomNo(OrderParseMain.customNo);
+				
 				session.save(orderDetail);
 			
 				t.commit();

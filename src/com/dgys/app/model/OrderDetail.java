@@ -6,11 +6,13 @@ import java.util.Set;
 public class OrderDetail {
 	private int orderId;
 	private String factNo;
+	private String customNo;
 	private String poNumber;
 	private String orderDate;
 	private String resalePermit;
 	private String shipVia;
 	private String terms;
+	private String colpadNo;
 	private Timestamp recDt;
 	private Set<OrderItem> orderItems;
 	
@@ -67,6 +69,18 @@ public class OrderDetail {
 	}
 	public void setRecDt(Timestamp recDt) {
 		this.recDt = recDt;
+	}
+	public String getCustomNo() {
+		return customNo;
+	}
+	public void setCustomNo(String customNo) {
+		this.customNo = customNo;
+	}
+	public String getColpadNo() {
+		return colpadNo;
+	}
+	public void setColpadNo(String colpadNo) {
+		this.colpadNo = colpadNo;
 	}
 	
 }

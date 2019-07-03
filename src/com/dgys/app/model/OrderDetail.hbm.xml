@@ -8,8 +8,11 @@
    <column name="ORDERID" not-null="true" unique="true"/>
    <generator class="increment"/>
   </id>
-  <property name="factNo" type="string">
-   <column name="fact_no"/>
+  <property generated="never" lazy="false" name="factNo" type="string">
+   <column name="fact_no" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="customNo" type="string">
+   <column name="custom_no" not-null="true"/>
   </property>
   <property generated="never" lazy="false" name="poNumber" type="java.lang.String">
    <column name="PONUMBER"/>
@@ -26,6 +29,9 @@
   <property generated="never" lazy="false" name="terms" type="java.lang.String">
    <column name="TERMS"/>
   </property>
+  <property name="colpadNo">
+   <column name="colpad_no"/>
+  </property>
   <set cascade="all" fetch="select" inverse="true" lazy="true"
    name="orderItems" sort="unsorted" table="ORDERITEM">
    <key>
@@ -33,7 +39,7 @@
    </key>
    <one-to-many class="com.dgys.app.model.OrderItem"/>
   </set>
-  <property name="recDt" type="timestamp">
+  <property generated="never" lazy="false" name="recDt" type="timestamp">
    <column name="rec_dt" sql-type="TIMESTAMP"/>
   </property>
  </class>

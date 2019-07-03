@@ -3,7 +3,6 @@ package com.dgys.app.model;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,37 +25,51 @@ public class OrderDetector {
 	private String failDirStr;
 	private Logger loger = Logger.getLogger(getClass());
 
+	/**
+	 * 需要解析指定的訂單文件時用
+	 */
+	public OrderDetector() {
+	}
+
+	/**
+	 * 需要OrderDetector自動處理訂單文件時用
+	 * 
+	 * @param systemProperties
+	 *            配置文件
+	 */
 	public OrderDetector(String systemProperties) {
-		
+
 		try {
-			
+
 			Properties sysProper = new Properties();
 			sysProper.load(ClassLoader.getSystemResourceAsStream(systemProperties));
-			
+
 			factNo = sysProper.getProperty("factNo");
 			orderDirStr = sysProper.getProperty("orderDir");
 			successDirStr = sysProper.getProperty("successDir");
 			failDirStr = sysProper.getProperty("failDir");
-			
-			if(factNo == null || factNo.equals("")){
+
+			if (factNo == null || factNo.equals("")) {
 				throw new Exception("未配置屬性factNo");
 			}
-			
-			if(successDirStr == null || successDirStr.equals("")){
+
+			if (successDirStr == null || successDirStr.equals("")) {
 				throw new Exception("未配置屬性successDir");
 			}
-			
-			if(failDirStr == null || failDirStr.equals("")){
+
+			if (failDirStr == null || failDirStr.equals("")) {
 				throw new Exception("未配置屬性failDir");
 			}
 			
+			OrderParseMain.factNo = factNo;
+
 			initDir();
 		} catch (Exception e) {
 			loger.error(e.getMessage());
 		}
 	}
-	
-	public void start(){
+
+	public void start() {
 		try {
 			orderDir = new File(orderDirStr);
 
@@ -66,25 +79,25 @@ public class OrderDetector {
 				}
 			});
 
-			if (pdfOrders.length > 0){
-				orderParsers = new HashMap<String, IOrderParser>();		
+			if (pdfOrders.length > 0) {
+				orderParsers = new HashMap<String, IOrderParser>();
 			}
-			
-			//循環處理每個pdf文檔
+
+			// 循環處理每個pdf文檔
 			for (int i = 0; i < pdfOrders.length; i++) {
 				try {
-					
+
 					poDoc = PDDocument.load(pdfOrders[i]);
 
 					PDFTextStripper textStripper = new PDFTextStripper();
 
 					parseOrder(pdfOrders[i].getName(), textStripper.getText(poDoc));
-					
+
 					flag = "S";
 				} catch (Exception ex) {
-					loger.error(ex.getMessage() + "--" + "File:" +pdfOrders[i].getName());
+					loger.error(ex.getMessage() + "--" + "File:" + pdfOrders[i].getName());
 					flag = "F";
-					
+
 				} finally {
 					if (poDoc != null) {
 						poDoc.close();
@@ -92,6 +105,26 @@ public class OrderDetector {
 					}
 				}
 			}
+		} catch (Exception e) {
+			loger.error(e.getMessage());
+		}
+	}
+
+	public void parseSingleFile(String filePath) {
+
+		File pdfOrderFile = new File(filePath);
+
+		try {
+			if (!pdfOrderFile.exists())
+				throw new Exception("文件:" + filePath + "不存在!");
+
+			orderParsers = new HashMap<String, IOrderParser>();
+
+			poDoc = PDDocument.load(pdfOrderFile);
+
+			PDFTextStripper textStripper = new PDFTextStripper();
+
+			parseOrder(pdfOrderFile.getName(), textStripper.getText(poDoc));
 		} catch (Exception e) {
 			loger.error(e.getMessage());
 		}
@@ -111,45 +144,57 @@ public class OrderDetector {
 				orderParser = new AmfitOrderParser();
 				orderParsers.put("amfit", orderParser);
 			}
+			
+			OrderParseMain.customNo = "A00127";
+		}
+		else if(fileName.toUpperCase().startsWith("YY2-S8")){
+			orderParser = orderParsers.get("yy2s8");
+			if (orderParser == null) {
+				orderParser = new YY2S8OrderParser();
+				orderParsers.put("yy2s8", orderParser);
+			}
+			
+			OrderParseMain.customNo = "A00256";
+		}
+		else{
+			throw new Exception("暫不支持解析此文件:" + fileName);
 		}
 
 		orderParser.ParseOrderText(tempOrderFile);
 	}
-	
-	private void initDir()
-	{
-		//創建轉移文件夾
+
+	private void initDir() {
+		// 創建轉移文件夾
 		successDir = new File(successDirStr);
 		failDir = new File(failDirStr);
-		
-		if(!successDir.exists())
+
+		if (!successDir.exists())
 			successDir.mkdirs();
-		
-		if(!failDir.exists())
+
+		if (!failDir.exists())
 			failDir.mkdirs();
-		
+
 		Date currentDay = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		curDayDir = sdf.format(currentDay);
 	}
-	
-	private void moveFile(File file)
-	{
+
+	private void moveFile(File file) {
 		File destFile = null;
 		File destDir = null;
 		String tmp = "\\" + curDayDir + "\\";
-		
-		if(flag.equals("S"))
+
+		if (flag.equals("S"))
 			destDir = new File(successDir.getPath() + tmp);
-		else if(flag.equals("F"))
+		else if (flag.equals("F"))
 			destDir = new File(failDir.getPath() + tmp);
-		
-		if(!destDir.exists())
+
+		if (!destDir.exists())
 			destDir.mkdirs();
-		
+
 		destFile = new File(destDir.getPath() + "\\" + file.getName());
-		
-		if(!file.renameTo(destFile))
+
+		if (!file.renameTo(destFile))
 			loger.error("移轉文件:" + file.getName() + "失敗!");
 	}
 }
