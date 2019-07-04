@@ -23,5 +23,10 @@ public class OrderItemRef {
 	public void setRefValue(String refValue) {
 		this.refValue = refValue;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "OrderItemRef:" + itemRefId + "--" + refValue;
+	}
 	
 }

@@ -65,7 +65,7 @@ public class OrderDetector {
 
 			initDir();
 		} catch (Exception e) {
-			loger.error(e.getMessage());
+			loger.error(e.getStackTrace());
 		}
 	}
 
@@ -106,7 +106,7 @@ public class OrderDetector {
 				}
 			}
 		} catch (Exception e) {
-			loger.error(e.getMessage());
+			loger.error(e.getStackTrace());
 		}
 	}
 

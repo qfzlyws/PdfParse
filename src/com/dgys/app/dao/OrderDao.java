@@ -8,7 +8,7 @@ import com.dgys.app.model.OrderParseMain;
 import com.dgys.app.util.HibernateUtil;
 
 public class OrderDao {
-	public static void saveOrder(OrderDetail orderDetail)
+	public static void saveOrder(OrderDetail orderDetail) throws Exception
 	{
 		if(orderDetail != null)
 		{			

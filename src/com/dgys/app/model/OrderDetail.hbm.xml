@@ -29,7 +29,7 @@
   <property generated="never" lazy="false" name="terms" type="java.lang.String">
    <column name="TERMS"/>
   </property>
-  <property name="colpadNo">
+  <property generated="never" lazy="false" name="colpadNo">
    <column name="colpad_no"/>
   </property>
   <set cascade="all" fetch="select" inverse="true" lazy="true"

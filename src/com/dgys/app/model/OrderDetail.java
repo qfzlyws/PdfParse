@@ -83,4 +83,12 @@ public class OrderDetail {
 		this.colpadNo = colpadNo;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return "OrderDetail:" + orderId + "--" + factNo + "--" + customNo + "--" + poNumber + "--" 
+				+ orderDate + "--" + resalePermit + "--" + shipVia + "--" + terms
+				+ "--" + colpadNo + "--" + recDt;
+	}	
+	
 }

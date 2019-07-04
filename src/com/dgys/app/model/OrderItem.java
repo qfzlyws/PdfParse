@@ -75,6 +75,12 @@ public class OrderItem {
 	public void setItemRefs(Set<OrderItemRef> itemRefs) {
 		this.itemRefs = itemRefs;
 	}
+	@Override
+	public String toString() {
+		
+		return "OrderItem:" + orderItemId + "--" + lineNum + "--" + itemNumber + "--" + dateRequired 
+				+ "--" + unit + "--" + odrQty + "--" + unitCost + "--" + amount;
+	}
 	
 	
 }
