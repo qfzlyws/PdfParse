@@ -6,14 +6,13 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 
 import com.dgys.app.dao.OrderDao;
+import com.dgys.app.util.StringUtil;
 
 public class YY2S8OrderParser implements IOrderParser {
 	private RandomAccessFile file = null;
 	private OrderDetail orderDetail = null;
 	private HashSet<OrderItem> orderItems = null;
-	private HashSet<OrderItemRef> itemRefs = null;
 	private OrderItem orderItem = null;
-	private OrderItemRef itemRef = null;
 	private boolean readedSizes = false;
 	private String[] sizeQtys = null;
 	private String[] sizeNos = null;
@@ -25,7 +24,6 @@ public class YY2S8OrderParser implements IOrderParser {
 	public YY2S8OrderParser() {
 		orderDetail = new OrderDetail();
 		orderItems = new HashSet<>();
-		itemRefs = new HashSet<>();
 		
 		orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));
 	}
@@ -34,7 +32,7 @@ public class YY2S8OrderParser implements IOrderParser {
 	public void ParseOrderText(String orderFilePath) throws Exception {
 		try {
 			file = new RandomAccessFile(orderFilePath, "r");
-			String line = new String(file.readLine().getBytes("ISO-8859-1"), "UTF-8");
+			String line = StringUtil.convertToUTF8(file.readLine());
 
 			while (line != null) {
 				if (line.indexOf("訂購日期:") != -1)
@@ -75,8 +73,7 @@ public class YY2S8OrderParser implements IOrderParser {
 					sizeQtys = null;
 				}
 
-				line = file.readLine();
-				line = line == null ? line : new String(line.getBytes("ISO-8859-1"), "UTF-8");
+				line = StringUtil.convertToUTF8(file.readLine());
 			}
 
 			orderDetail.setOrderItems(orderItems);
