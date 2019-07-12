@@ -3,6 +3,7 @@ package com.dgys.app.model;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -133,10 +134,10 @@ public class OrderDetector {
 	private void parseOrder(String fileName, String orderText) throws Exception {
 		IOrderParser orderParser = null;
 		String tempOrderFile = "temp.txt";
-		FileOutputStream fos = new FileOutputStream(tempOrderFile);
+		OutputStreamWriter oStreamWriter = new OutputStreamWriter(new FileOutputStream(tempOrderFile),"utf-8");
 
-		fos.write(orderText.getBytes());
-		fos.close();
+		oStreamWriter.write(orderText);
+		oStreamWriter.close();
 
 		if (fileName.toUpperCase().startsWith("AMFIT")) {
 			orderParser = orderParsers.get("amfit");
