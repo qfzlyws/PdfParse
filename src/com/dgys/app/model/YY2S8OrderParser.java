@@ -38,6 +38,9 @@ public class YY2S8OrderParser implements IOrderParser {
 				if (line.indexOf("訂購日期:") != -1)
 					orderDetail.setColpadNo(line.replace("訂購日期:", "").trim()); // 色卡編號
 
+				if(line.endsWith("NO:"))
+					orderDetail.setPoNo(line.replace("NO:",""));
+				
 				if (sizeQtys != null)
 					sizeNos = line.split("\\s+");
 

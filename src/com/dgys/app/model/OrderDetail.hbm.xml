@@ -29,8 +29,14 @@
   <property generated="never" lazy="false" name="terms" type="java.lang.String">
    <column name="TERMS"/>
   </property>
+  <property name="poNo">
+   <column name="po_no"/>
+  </property>
   <property generated="never" lazy="false" name="colpadNo">
    <column name="colpad_no"/>
+  </property>
+  <property generated="never" lazy="false" name="recDt" type="timestamp">
+   <column name="rec_dt" sql-type="TIMESTAMP"/>
   </property>
   <set cascade="all" fetch="select" inverse="true" lazy="true"
    name="orderItems" sort="unsorted" table="ORDERITEM">
@@ -39,8 +45,5 @@
    </key>
    <one-to-many class="com.dgys.app.model.OrderItem"/>
   </set>
-  <property generated="never" lazy="false" name="recDt" type="timestamp">
-   <column name="rec_dt" sql-type="TIMESTAMP"/>
-  </property>
  </class>
 </hibernate-mapping>

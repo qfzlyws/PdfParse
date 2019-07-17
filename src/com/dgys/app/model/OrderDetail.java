@@ -13,6 +13,7 @@ public class OrderDetail {
 	private String shipVia;
 	private String terms;
 	private String colpadNo;
+	private String poNo;
 	private Timestamp recDt;
 	private Set<OrderItem> orderItems;
 	
@@ -83,6 +84,12 @@ public class OrderDetail {
 		this.colpadNo = colpadNo;
 	}
 	
+	public String getPoNo() {
+		return poNo;
+	}
+	public void setPoNo(String poNo) {
+		this.poNo = poNo;
+	}
 	@Override
 	public String toString() {
 		
