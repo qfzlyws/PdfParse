@@ -31,7 +31,8 @@ public class OrderDao {
 			}catch(Exception ex)
 			{
 				t.rollback();
-				throw ex;
+				
+				throw new Exception(ex.getMessage() + " PO NO:" + orderDetail.getPoNo());
 			}
 			finally{
 				session.close();

@@ -22,10 +22,10 @@ public class YY2S8OrderParser implements IOrderParser {
 	private boolean readedNO = false;
 
 	public YY2S8OrderParser() {
-		orderDetail = new OrderDetail();
+		/*orderDetail = new OrderDetail();
 		orderItems = new HashSet<>();
 		
-		orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));
+		orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));*/
 	}
 
 	@Override
@@ -36,10 +36,24 @@ public class YY2S8OrderParser implements IOrderParser {
 
 			while (line != null) {
 				if (line.indexOf("訂購日期:") != -1)
+				{
+					orderDetail = new OrderDetail();
+					orderItems = new HashSet<>();
+					
+					orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));
+					
 					orderDetail.setColpadNo(line.replace("訂購日期:", "").trim()); // 色卡編號
+				}
 
 				if(line.endsWith("NO:"))
 					orderDetail.setPoNo(line.replace("NO:",""));
+				
+				if(line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+"))
+				{
+					temp = line.substring(line.indexOf("NO:"), line.length());
+					tempArray = temp.split("\\s+");
+					orderDetail.setPoNumber(tempArray[1]);
+				}
 				
 				if (sizeQtys != null)
 					sizeNos = line.split("\\s+");
@@ -63,11 +77,14 @@ public class YY2S8OrderParser implements IOrderParser {
 
 				if (readedNO) {
 					tempArray = line.split("\\s+");
-					orderDetail.setPoNumber(tempArray[1]);
+					
+					if(tempArray.length > 1)
+						orderDetail.setPoNumber(tempArray[1]);
+					
 					readedNO = false;
 				}
 
-				if (line.startsWith("NO:"))
+				if (line.startsWith("NO:") || line.matches("[\\S\\s]+\\s+NO:[\\S]+"))
 					readedNO = true;
 
 				if (sizeNos != null && sizeQtys != null) {
@@ -75,23 +92,22 @@ public class YY2S8OrderParser implements IOrderParser {
 					sizeNos = null;
 					sizeQtys = null;
 				}
+				
+				if(line.indexOf("合計:") != -1)
+				{
+					orderDetail.setOrderItems(orderItems);
+
+					OrderDao.saveOrder(orderDetail);
+				}
 
 				line = StringUtil.convertToUTF8(file.readLine());
 			}
-
-			orderDetail.setOrderItems(orderItems);
-
-			OrderDao.saveOrder(orderDetail);
 
 		} catch (Exception ex) {
 			throw ex;
 		} finally {
 			if (file != null)
-				try {
-					file.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				file.close();
 		}
 	}
 
