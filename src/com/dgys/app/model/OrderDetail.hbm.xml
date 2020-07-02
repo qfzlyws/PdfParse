@@ -38,6 +38,9 @@
   <property generated="never" lazy="false" name="recDt" type="timestamp">
    <column name="rec_dt" sql-type="TIMESTAMP"/>
   </property>
+  <property generated="never" lazy="false" name="unitPrice" type="float">
+   <column name="unit_price" sql-type="number"/>
+  </property>
   <set cascade="all" fetch="select" inverse="true" lazy="true"
    name="orderItems" sort="unsorted" table="ORDERITEM">
    <key>

@@ -15,6 +15,7 @@ public class OrderDetail {
 	private String colpadNo;
 	private String poNo;
 	private Timestamp recDt;
+	private Float unitPrice;
 	private Set<OrderItem> orderItems;
 	
 	public int getOrderId() {
@@ -96,6 +97,12 @@ public class OrderDetail {
 		return "OrderDetail:" + orderId + "--" + factNo + "--" + customNo + "--" + poNumber + "--" 
 				+ orderDate + "--" + resalePermit + "--" + shipVia + "--" + terms
 				+ "--" + colpadNo + "--" + recDt;
+	}
+	public Float getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(Float unitPrice) {
+		this.unitPrice = unitPrice;
 	}	
 	
 }

@@ -18,7 +18,7 @@ public class YY2S8OrderParser implements IOrderParser {
 	private boolean readedUniqueNo = false;
 	private String temp = "";
 	private String[] tempArray = null;
-	private boolean readedNO = false;
+	//private boolean readedNO = false;
 
 	public YY2S8OrderParser() {
 		/*orderDetail = new OrderDetail();
@@ -118,6 +118,11 @@ public class YY2S8OrderParser implements IOrderParser {
 				
 				if(line.indexOf("合計:") != -1)
 				{
+					tempArray = line.substring(line.indexOf("合計:")).split("\\s");
+					
+					if(tempArray.length > 2)
+						orderDetail.setUnitPrice(Float.parseFloat(tempArray[1]));
+					
 					orderDetail.setOrderItems(orderItems);
 
 					OrderDao.saveOrder(orderDetail);
