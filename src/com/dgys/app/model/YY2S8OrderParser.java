@@ -1,6 +1,5 @@
 package com.dgys.app.model;
 
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -48,13 +47,6 @@ public class YY2S8OrderParser implements IOrderParser {
 				if(line.endsWith("NO:"))
 					orderDetail.setPoNo(line.replace("NO:",""));
 				
-				if(line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+"))
-				{
-					temp = line.substring(line.indexOf("NO:"), line.length());
-					tempArray = temp.split("\\s+");
-					orderDetail.setPoNumber(tempArray[1]);
-				}
-				
 				if (sizeQtys != null)
 					sizeNos = line.split("\\s+");
 
@@ -74,18 +66,49 @@ public class YY2S8OrderParser implements IOrderParser {
 
 				if (line.indexOf("統一編號:") != -1)
 					readedUniqueNo = true;
+				
+				if(line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+"))
+				{
+					temp = line.substring(line.indexOf("NO:"), line.length());
+					tempArray = temp.split("\\s+");
+					orderDetail.setPoNumber(tempArray[1]);
+				}
 
-				if (readedNO) {
+				if(line.matches("AR\\d{8}\\s+\\d{2}")){
+					tempArray = line.split("\\s+");
+					
+					if(tempArray.length > 1)
+						orderDetail.setPoNumber(tempArray[0]);
+				}
+				
+				if(line.matches("S\\d{7}\\s+S\\d{8}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
 					
 					if(tempArray.length > 1)
 						orderDetail.setPoNumber(tempArray[1]);
+				}
+				
+				if(line.matches("S\\d{7}\\s+S\\d{8}\\s+\\d{2}") || line.matches("A\\d{7}\\s+AR\\d{8}\\s+\\d{2}")){
+					tempArray = line.split("\\s+");
 					
-					readedNO = false;
+					if(tempArray.length > 1)
+						orderDetail.setPoNumber(tempArray[1]);
+				}
+				
+				if (line.matches("[\\S\\s]*A\\d{7}\\s+AR\\d{8}\\s+\\d{2}")) {
+					temp = line.replaceFirst("A\\d{7}\\s+AR\\d{8}\\s+\\d{2}", "");
+					temp = line.replace(temp, "");
+					
+					tempArray = temp.split("\\s+");
+					
+					if(tempArray.length > 1)
+						orderDetail.setPoNumber(tempArray[1]);
+					
+					//readedNO = false;
 				}
 
-				if (line.startsWith("NO:") || line.matches("[\\S\\s]+\\s+NO:[\\S]+"))
-					readedNO = true;
+				//if (line.startsWith("NO:") || line.matches("[\\S\\s]+\\s+NO:[\\S]+"))
+				//	readedNO = true;
 
 				if (sizeNos != null && sizeQtys != null) {
 					parseOrderItem();
