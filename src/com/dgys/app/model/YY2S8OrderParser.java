@@ -81,22 +81,22 @@ public class YY2S8OrderParser implements IOrderParser {
 						orderDetail.setPoNumber(tempArray[0]);
 				}
 				
-				if(line.matches("S\\d{7}\\s+S\\d{8}\\s+\\d{2}")){
+				if(line.matches("S\\d{7}\\s+S\\d{8,}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
 					
 					if(tempArray.length > 1)
 						orderDetail.setPoNumber(tempArray[1]);
 				}
 				
-				if(line.matches("S\\d{7}\\s+S\\d{8}\\s+\\d{2}") || line.matches("A\\d{7}\\s+AR\\d{8}\\s+\\d{2}")){
+				if(line.matches("S\\d{7}\\s+S\\d{8,}\\s+\\d{2}") || line.matches("A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
 					
 					if(tempArray.length > 1)
 						orderDetail.setPoNumber(tempArray[1]);
 				}
 				
-				if (line.matches("[\\S\\s]*A\\d{7}\\s+AR\\d{8}\\s+\\d{2}")) {
-					temp = line.replaceFirst("A\\d{7}\\s+AR\\d{8}\\s+\\d{2}", "");
+				if (line.matches("[\\S\\s]*A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}")) {
+					temp = line.replaceFirst("A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}", "");
 					temp = line.replace(temp, "");
 					
 					tempArray = temp.split("\\s+");
