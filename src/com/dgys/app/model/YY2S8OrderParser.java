@@ -73,6 +73,13 @@ public class YY2S8OrderParser implements IOrderParser {
 					tempArray = temp.split("\\s+");
 					orderDetail.setPoNumber(tempArray[1]);
 				}
+				
+				if(line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+[\\s\\S]+"))
+				{
+					temp = line.substring(line.indexOf("NO:"), line.length());
+					tempArray = temp.split("\\s+");
+					orderDetail.setPoNumber(tempArray[2]);
+				}
 
 				if(line.matches("AR\\d{8}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
