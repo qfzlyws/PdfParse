@@ -11,15 +11,21 @@ public class OrderDao {
 	public static void saveOrder(OrderDetail orderDetail) throws Exception
 	{
 		if(orderDetail != null)
-		{			
-			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		{
+			SessionFactory sessionFactory = null;
 			
-			Session session = sessionFactory.openSession();
+			Session session = null;
 			
-			Transaction t = session.beginTransaction();
+			Transaction t = null;
 			
 			try
 			{
+				sessionFactory = HibernateUtil.getSessionFactory();
+				
+				session = sessionFactory.openSession();
+				
+				t = session.beginTransaction();
+				
 				//設置廠區編號和客戶編號屬性的值
 				orderDetail.setFactNo(OrderParseMain.factNo);
 				orderDetail.setCustomNo(OrderParseMain.customNo);
@@ -30,12 +36,14 @@ public class OrderDao {
 				
 			}catch(Exception ex)
 			{
-				t.rollback();
+				if(t != null)
+					t.rollback();
 				
 				throw new Exception(ex.getMessage() + " PO NO:" + orderDetail.getPoNo());
-			}
+			}		
 			finally{
-				session.close();
+				if(session != null && session.isOpen())
+					session.close();
 			}
 		}
 	}
