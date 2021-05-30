@@ -4,7 +4,12 @@ import java.io.RandomAccessFile;
 import java.sql.Timestamp;
 import java.util.HashSet;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import com.dgys.app.dao.OrderDao;
+import com.dgys.app.util.HibernateUtil;
 import com.dgys.app.util.StringUtil;
 
 public class YY2S8OrderParser implements IOrderParser {
@@ -132,7 +137,7 @@ public class YY2S8OrderParser implements IOrderParser {
 					
 					orderDetail.setOrderItems(orderItems);
 
-					OrderDao.saveOrder(orderDetail);
+					saveOrder(orderDetail);
 				}
 
 				line = StringUtil.convertToUTF8(file.readLine());
@@ -155,6 +160,28 @@ public class YY2S8OrderParser implements IOrderParser {
 			orderItem.setOdrQty(sizeQtys[i]);
 
 			orderItems.add(orderItem);
+		}
+	}
+	
+	private void saveOrder(OrderDetail orderDetail) throws Exception{
+		Session session = null;
+		Transaction t = null;
+		
+		try{
+			session = HibernateUtil.getCurrentSession();
+			t = session.beginTransaction();
+			
+			OrderDao orderDao = new OrderDao();
+			orderDao.saveOrder(orderDetail);
+			
+			t.commit();
+		}catch(Exception ex){
+			if(t != null)
+				t.rollback();
+			
+			throw ex;
+		}finally{
+			HibernateUtil.closeSession();
 		}
 	}
 

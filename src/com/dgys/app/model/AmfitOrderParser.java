@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.dgys.app.dao.OrderDao;
+import com.dgys.app.util.HibernateUtil;
 import com.dgys.app.util.StringUtil;
 
 public class AmfitOrderParser implements IOrderParser {
@@ -104,7 +108,7 @@ public class AmfitOrderParser implements IOrderParser {
 			 * System.out.println(ref); } }
 			 */
 
-			OrderDao.saveOrder(orderDetail);
+			saveOrder(orderDetail);
 
 		} catch (Exception ex) {
 			throw ex;
@@ -188,6 +192,28 @@ public class AmfitOrderParser implements IOrderParser {
 
 		file.setLength(0);
 		file.write(temp.toString().getBytes("UTF-8"));
+	}
+	
+	private void saveOrder(OrderDetail orderDetail) throws Exception{
+		Session session = null;
+		Transaction t = null;
+		
+		try{
+			session = HibernateUtil.getCurrentSession();
+			t = session.beginTransaction();
+			
+			OrderDao orderDao = new OrderDao();
+			orderDao.saveOrder(orderDetail);
+			
+			t.commit();
+		}catch(Exception ex){
+			if(t != null)
+				t.rollback();
+			
+			throw ex;
+		}finally{
+			HibernateUtil.closeSession();
+		}
 	}
 
 }
