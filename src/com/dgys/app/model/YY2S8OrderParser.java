@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.dgys.app.dao.OrderDao;

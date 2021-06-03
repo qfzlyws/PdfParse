@@ -97,12 +97,8 @@ public class OrderDetector {
 					parseOrder(pdfOrders[i].getName(), textStripper.getText(poDoc));
 
 					flag = "S";
-				} catch (Exception ex) {
-					StringWriter sw = new StringWriter();
-					PrintWriter pw = new PrintWriter(sw);
-					ex.printStackTrace(pw);
-					
-					loger.error("File:" + pdfOrders[i].getName() + "\n" + sw.toString());
+				} catch (Exception ex) {					
+					loger.error("File:" + pdfOrders[i].getName(),ex);
 					flag = "F";
 
 				} finally {
