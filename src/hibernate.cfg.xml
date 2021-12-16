@@ -4,7 +4,7 @@
 <hibernate-configuration>
  <session-factory >
   <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-  <property name="hibernate.connection.password">1w4)P.91I</property>
+  <property name="hibernate.connection.password">w4)P.91I</property>
   <property name="hibernate.connection.url">jdbc:oracle:thin:@172.24.5.111:1521:hjftdb</property>
   <property name="hibernate.connection.username">fmis</property>
   <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>

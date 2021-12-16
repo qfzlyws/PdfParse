@@ -20,15 +20,11 @@ public class YY2S8OrderParser implements IOrderParser {
 	private String[] sizeQtys = null;
 	private String[] sizeNos = null;
 	private boolean readedUniqueNo = false;
+	private boolean readedPoNumber = false;
 	private String temp = "";
 	private String[] tempArray = null;
-	//private boolean readedNO = false;
 
 	public YY2S8OrderParser() {
-		/*orderDetail = new OrderDetail();
-		orderItems = new HashSet<>();
-		
-		orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));*/
 	}
 
 	@Override
@@ -42,6 +38,7 @@ public class YY2S8OrderParser implements IOrderParser {
 				{
 					orderDetail = new OrderDetail();
 					orderItems = new HashSet<>();
+					readedPoNumber = false;
 					
 					orderDetail.setRecDt(new Timestamp(System.currentTimeMillis()));
 					
@@ -71,55 +68,64 @@ public class YY2S8OrderParser implements IOrderParser {
 				if (line.indexOf("統一編號:") != -1)
 					readedUniqueNo = true;
 				
-				if(line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+"))
+				if(!readedPoNumber && line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+"))
 				{
 					temp = line.substring(line.indexOf("NO:"), line.length());
 					tempArray = temp.split("\\s+");
 					orderDetail.setPoNumber(tempArray[1]);
+					readedPoNumber = true;
 				}
 				
-				if(line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+[\\s\\S]+"))
+				if(!readedPoNumber && line.matches("[\\s\\S]+\\sNO:\\S+\\s+\\S+\\s+\\S+[\\s\\S]+"))
 				{
 					temp = line.substring(line.indexOf("NO:"), line.length());
 					tempArray = temp.split("\\s+");
 					orderDetail.setPoNumber(tempArray[2]);
+					readedPoNumber = true;
 				}
 
-				if(line.matches("AR\\d{8}\\s+\\d{2}")){
+				if(!readedPoNumber && line.matches("AR\\d{8}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
 					
 					if(tempArray.length > 1)
+					{
 						orderDetail.setPoNumber(tempArray[0]);
+						readedPoNumber = true;
+					}
 				}
 				
-				if(line.matches("S\\d{7}\\s+S\\d{8,}\\s+\\d{2}")){
+				if(!readedPoNumber && line.matches("S\\d{7}\\s+S\\d{8,}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
 					
 					if(tempArray.length > 1)
+					{
 						orderDetail.setPoNumber(tempArray[1]);
+						readedPoNumber = true;
+					}
 				}
 				
-				if(line.matches("S\\d{7}\\s+S\\d{8,}\\s+\\d{2}") || line.matches("A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}")){
+				if(!readedPoNumber && line.matches("S\\d{7}\\s+S\\d{8,}\\s+\\d{2}") || line.matches("A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}")){
 					tempArray = line.split("\\s+");
 					
 					if(tempArray.length > 1)
+					{
 						orderDetail.setPoNumber(tempArray[1]);
+						readedPoNumber = true;
+					}
 				}
 				
-				if (line.matches("[\\S\\s]*A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}")) {
+				if (!readedPoNumber && line.matches("[\\S\\s]*A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}")) {
 					temp = line.replaceFirst("A\\d{7}\\s+AR\\d{8,}\\s+\\d{2}", "");
 					temp = line.replace(temp, "");
 					
 					tempArray = temp.split("\\s+");
 					
 					if(tempArray.length > 1)
+					{
 						orderDetail.setPoNumber(tempArray[1]);
-					
-					//readedNO = false;
+						readedPoNumber = true;
+					}
 				}
-
-				//if (line.startsWith("NO:") || line.matches("[\\S\\s]+\\s+NO:[\\S]+"))
-				//	readedNO = true;
 
 				if (sizeNos != null && sizeQtys != null) {
 					parseOrderItem();

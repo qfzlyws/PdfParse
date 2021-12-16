@@ -155,7 +155,7 @@ public class OrderDetector {
 				orderParsers.put("yy2s8", orderParser);
 			}
 			
-			OrderParseMain.customNo = "A00256";
+			OrderParseMain.customNo = "A00294";
 		}
 		else{
 			throw new Exception("暫不支持解析此文件:" + fileName);
