@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.log4j.Logger;
 
 public class OrderDetector {
 	public static String factNo;
@@ -24,7 +26,7 @@ public class OrderDetector {
 	private String flag = "F";
 	private String successDirStr;
 	private String failDirStr;
-	private Logger loger = Logger.getLogger(getClass());
+	private Logger loger = LogManager.getLogger(getClass());
 
 	/**
 	 * 需要解析指定的訂單文件時用
