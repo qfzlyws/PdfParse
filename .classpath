@@ -19,7 +19,7 @@
 	<classpathentry kind="lib" path="E:/Software/Java/hibernate-release-5.0.12.Final/lib/required/jboss-logging-3.3.0.Final.jar"/>
 	<classpathentry kind="lib" path="E:/Software/Java/libs/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="E:/Software/Java/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="E:/Software/Java/libs/log4j-api-2.16.0.jar"/>
-	<classpathentry kind="lib" path="E:/Software/Java/libs/log4j-core-2.16.0.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/libs/log4j-api-2.17.0.jar"/>
+	<classpathentry kind="lib" path="E:/Software/Java/libs/log4j-core-2.17.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
